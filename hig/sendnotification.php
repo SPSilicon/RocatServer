@@ -1,5 +1,5 @@
 <?php
-function send_notification($devices ,$title ,$message)
+function send_notification($devices ,$title,$rocatid ,$message)
 {
     //https://firebase.google.com/docs/cloud-messaging/http-server-ref
     $url = 'https://fcm.googleapis.com/fcm/send';
@@ -7,6 +7,7 @@ function send_notification($devices ,$title ,$message)
     $message = array(
         'title'     => $title,
         'body'      => $message,
+        'rocatId' => $rocatid
     );
     $fields = array(
         'registration_ids' => $devices,
@@ -50,7 +51,7 @@ if($result->num_rows > 0)
     {
         $devices[] = $row["device_id"];
     }
-    $myMessage = send_notification($devices,"고양이 발견!",$rocatid."번 밥통에서 고양이가 밥을먹고있어요~");
+    $myMessage = send_notification($devices,"고양이 발견!",$rocatid ,$rocatid."번 밥통에서 고양이가 밥을먹고있어요~");
     echo $myMessage;
 }
 else
