@@ -1,6 +1,7 @@
 <?php
-function send_notification($tokens, $title ,$message)
+function send_notification($devices ,$title ,$message)
 {
+    //https://firebase.google.com/docs/cloud-messaging/http-server-ref
     $url = 'https://fcm.googleapis.com/fcm/send';
 
     $message = array(
@@ -8,7 +9,7 @@ function send_notification($tokens, $title ,$message)
         'body'      => $message,
     );
     $fields = array(
-        'to' => $tokens,
+        'registration_ids' => $devices,
         'data' => $message
     );
     $key = "AIzaSyAE83xJLRCqf6ocAK1DU5NwsW-e0IAIcAo";
@@ -34,21 +35,23 @@ function send_notification($tokens, $title ,$message)
     return $result;
 }
 
-include("dbaccess.php");
+include("./private/dbaccess.php");
 $rocatid = $_POST["rocatid"];
 
 
 $sql = "SELECT DISTINCT device_id FROM vt_subsdevice WHERE Rocat_id = '".$rocatid."'";
 
 $result = $conn->query($sql);
+$devices = array();
 
 if($result->num_rows > 0)
 {
     while($row = $result->fetch_assoc())
     {
-        $mymessage = send_notification($row["device_id"],"고양이 발견!",$rocatid."번 밥통에서 고양이가 밥을먹고있어요~");
-        echo $mymessage;
+        $devices[] = $row["device_id"];
     }
+    $myMessage = send_notification($devices,"고양이 발견!",$rocatid."번 밥통에서 고양이가 밥을먹고있어요~");
+    echo $myMessage;
 }
 else
 {
