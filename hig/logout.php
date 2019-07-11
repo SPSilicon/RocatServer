@@ -1,6 +1,6 @@
 <?php
  require_once("./private/dbaccess.php");
-
+// 로그아웃할 시, 아이디에 등록된 device_id(instance_id) 제거
  $user_id = $_POST["userid"];
  $device_id = $_POST["deviceid"];
 
