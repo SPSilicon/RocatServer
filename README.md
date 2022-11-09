@@ -1,6 +1,7 @@
 # RocatServer
 한이음 로봇캣맘 웹서버 : google cloud platform 사용
 
+xampp 사용함<br>
 Database : MariaDB 사용<br>
 PHPmyAdmin 주소 : https://35.243.113.182/phpmyadmin/
           
